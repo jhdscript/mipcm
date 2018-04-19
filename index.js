@@ -58,9 +58,9 @@ function createVideo() {
     var dirs = getDirs(FOLDER_SCREENSHOTS);
     for (var i = 0; i < dirs.length; i++) {
       var d = dirs[i];
-      var src = path.join(FOLDER_SCREENSHOTS, d);
-      var dst = path.join(FOLDER_VIDEO, d + ".mp4");
-      var imglist = path.join(FOLDER_VIDEO, d + ".txt");
+      var src = path.join(__dirname, FOLDER_SCREENSHOTS, d);
+      var dst = path.join(__dirname, FOLDER_VIDEO, d + ".mp4");
+      var imglist = path.join(__dirname, FOLDER_VIDEO, d + ".txt");
 
       var jpgfiles = getJpg(src);
       jpgfiles.sort();
@@ -70,7 +70,8 @@ function createVideo() {
       }
       fs.writeFileSync(imglist, str.join('\r\n'));
       if (d !== dateref && !fs.existsSync(dst)) {
-        var ffmpeg = spawn(config.ffmpeg_path, ['-y', '-r', '1/1', '-f', 'concat', '-safe', '0', '-i', imglist, '-c:v', 'libx264', '-vf', 'fps=25,format=yuv420p', dst]); //-y -r 1/5 -f concat -safe 0 -i "test.txt" -c:v libx264 -vf "fps=25,format=yuv420p" "out.mp4"
+        var spawnargs = ['-y', '-r', '1/1', '-f', 'concat', '-safe', '0', '-i', imglist, '-c:v', 'libx264', '-vf', 'fps=25,format=yuv420p', dst];
+        var ffmpeg = spawn(config.ffmpeg_path, spawnargs);
         /*
         ffmpeg.stdout.on('data', (data) => {
           console.log("data")
