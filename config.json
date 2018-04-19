@@ -1,0 +1,8 @@
+{
+  "url": "http://yoururl:80",
+  "camid": "yourcamid",
+  "password": "yourpass",
+  "zip": true,
+  "video": true,
+  "ffmpeg_path": "/usr/bin/ffmpeg"
+}
